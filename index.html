@@ -1,272 +1,394 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cricket Live Update</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CBTF</title>
+<style>
+:root{
+  --cbtf-cyan:#00d8e2;
+  --cbtf-cyan-dark:#00aeb8;
+  --cbtf-black:#080808;
+  --cbtf-panel:#141414;
+  --cbtf-border:#343434;
+  --cbtf-text:#f5f5f5;
+  --cbtf-yellow:#ffd500;
+}
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-    }
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial,sans-serif;
+}
 
-    body {
-      background: #f3f4f6;
-      color: #222;
-    }
+body{
+  background:var(--cbtf-black);
+  color:var(--cbtf-text);
+}
 
-    .header {
-      background: #075e3d;
-      color: white;
-      padding: 20px;
-      text-align: center;
-    }
+.container{
+  display:flex;
+  flex-direction:row-reverse;
+  min-height:100vh;
+}
 
-    .header h1 {
-      margin-bottom: 6px;
-    }
+.demo{
+  width:70%;
+  background:#000;
+  position:relative;
+}
 
-    .live {
-      color: #ff5252;
-      font-weight: bold;
-    }
+iframe{
+  width:100%;
+  height:100vh;
+  border:none;
+}
 
-    .container {
-      max-width: 900px;
-      margin: 25px auto;
-      padding: 15px;
-    }
+.right{
+  width:30%;
+  padding:30px 22px;
+  background:linear-gradient(180deg,#1b1b1b,#090909);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow-y:auto;
+}
 
-    .score-card {
-      background: white;
-      border-radius: 12px;
-      padding: 25px;
-      box-shadow: 0 3px 12px rgba(0,0,0,0.1);
-    }
+.box{
+  width:100%;
+  background:var(--cbtf-panel);
+  border:1px solid var(--cbtf-border);
+  border-top:3px solid var(--cbtf-cyan);
+  border-radius:8px;
+  padding:26px 20px;
+  text-align:center;
+  box-shadow:0 8px 28px rgba(0,0,0,.45);
+}
 
-    .teams {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
-    }
+.badge{
+  display:inline-block;
+  background:var(--cbtf-cyan);
+  color:#071012;
+  padding:8px 18px;
+  border-radius:4px;
+  font-weight:800;
+  margin-bottom:16px;
+}
 
-    .team {
-      font-size: 22px;
-      font-weight: bold;
-    }
+h1{
+  font-size:34px;
+  color:#fff;
+  margin-bottom:10px;
+  text-transform:uppercase;
+}
 
-    .score {
-      font-size: 38px;
-      font-weight: bold;
-      color: #075e3d;
-    }
+.sub{
+  font-size:17px;
+  line-height:1.5;
+  margin-bottom:22px;
+  color:#ddd;
+}
 
-    .overs {
-      color: #666;
-      margin-top: 5px;
-    }
+.features{
+  display:grid;
+  gap:12px;
+  margin:22px 0;
+}
 
-    .status {
-      background: #e8f5e9;
-      color: #075e3d;
-      padding: 12px;
-      border-radius: 8px;
-      margin: 20px 0;
-      font-weight: bold;
-    }
+.feature{
+  background:linear-gradient(90deg,#191919,#202020);
+  border:1px solid var(--cbtf-border);
+  border-left:3px solid var(--cbtf-cyan);
+  padding:14px;
+  border-radius:4px;
+  font-size:17px;
+  font-weight:700;
+}
 
-    .section {
-      margin-top: 25px;
-    }
+.feature span{
+  color:var(--cbtf-yellow);
+}
 
-    .section h2 {
-      background: #075e3d;
-      color: white;
-      padding: 10px;
-      border-radius: 7px 7px 0 0;
-      font-size: 18px;
-    }
+.signup-btn{
+  display:inline-block;
+  margin-top:8px;
+  padding:9px 16px;
+  background:var(--cbtf-cyan);
+  color:#071012;
+  text-decoration:none;
+  border-radius:4px;
+  font-size:15px;
+  font-weight:800;
+  border:1px solid var(--cbtf-cyan-dark);
+  transition:.2s;
+}
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      background: white;
-    }
+.signup-btn:hover{
+  background:var(--cbtf-cyan-dark);
+}
 
-    th, td {
-      padding: 12px;
-      text-align: left;
-      border-bottom: 1px solid #ddd;
-    }
+.website-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  margin-top:16px;
+  font-size:14px;
+  font-weight:bold;
+}
 
-    th {
-      background: #f0f0f0;
-    }
+.website-row a{
+  text-decoration:none;
+}
 
-    .updates {
-      list-style: none;
-      background: white;
-    }
+.website{
+  color:var(--cbtf-cyan);
+}
 
-    .updates li {
-      padding: 14px;
-      border-bottom: 1px solid #ddd;
-    }
+.whatsapp-small{
+  color:#39c66a;
+}
 
-    .ball {
-      display: inline-block;
-      background: #075e3d;
-      color: white;
-      padding: 5px 9px;
-      border-radius: 50%;
-      margin-right: 8px;
-      font-weight: bold;
-    }
+.cta{
+  display:block;
+  background:#168f43;
+  color:#fff;
+  text-decoration:none;
+  padding:17px;
+  border-radius:4px;
+  font-size:20px;
+  font-weight:900;
+  margin-top:22px;
+  transition:.2s;
+}
 
-    .footer {
-      text-align: center;
-      padding: 20px;
-      color: #777;
-      font-size: 14px;
-    }
+.cta:hover{
+  background:#107638;
+}
 
-    @media (max-width: 600px) {
-      .teams {
-        flex-direction: column;
-        gap: 10px;
-      }
+.floating-signup{
+  position:absolute;
+  top:20px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:50;
+  background:var(--cbtf-cyan);
+  color:#071012;
+  padding:12px 24px;
+  border-radius:4px;
+  font-size:18px;
+  font-weight:900;
+  border:2px solid #fff;
+  box-shadow:0 8px 20px rgba(0,216,226,.35);
+  transition:.2s;
+  text-decoration:none;
+  display:inline-block;
+}
 
-      .score {
-        font-size: 32px;
-      }
-    }
-  </style>
+.floating-signup:hover{
+  transform:translateX(-50%) scale(1.04);
+  background:var(--cbtf-cyan-dark);
+}
+
+.trust{
+  margin-top:16px;
+  color:#ddd;
+  font-size:14px;
+  line-height:1.5;
+}
+
+.footer{
+  margin-top:18px;
+  font-size:12px;
+  color:#aaa;
+  line-height:1.5;
+}
+
+.bonus-popup{
+  position:fixed;
+  inset:0;
+  z-index:100;
+  display:grid;
+  place-items:center;
+  padding:20px;
+  background:rgba(0,0,0,.82);
+}
+
+.bonus-popup[hidden]{
+  display:none;
+}
+
+.bonus-dialog{
+  position:relative;
+  width:min(100%,420px);
+  padding:34px 24px 28px;
+  border:2px solid var(--cbtf-cyan);
+  border-radius:8px;
+  background:#141414;
+  text-align:center;
+  color:var(--cbtf-text);
+  box-shadow:0 18px 60px rgba(0,0,0,.7);
+  animation:popup-enter .24s ease-out;
+}
+
+.bonus-close{
+  position:absolute;
+  top:8px;
+  right:12px;
+  border:0;
+  background:transparent;
+  color:var(--cbtf-cyan);
+  font-size:28px;
+  line-height:1;
+  cursor:pointer;
+}
+
+.bonus-dialog h2{
+  margin-bottom:10px;
+  color:var(--cbtf-yellow);
+  font-size:30px;
+}
+
+.bonus-dialog p{
+  margin-bottom:22px;
+  color:#eee;
+  line-height:1.7;
+}
+
+.bonus-claim{
+  display:block;
+  padding:14px 18px;
+  border-radius:4px;
+  background:var(--cbtf-cyan);
+  color:#071012;
+  font-size:17px;
+  font-weight:800;
+  text-decoration:none;
+}
+
+.bonus-claim:hover{
+  background:var(--cbtf-cyan-dark);
+}
+
+@keyframes popup-enter{
+  from{opacity:0;transform:translateY(10px) scale(.97)}
+  to{opacity:1;transform:translateY(0) scale(1)}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .bonus-dialog{animation:none}
+}
+
+@media(max-width:768px){
+  .container{
+    flex-direction:column-reverse;
+  }
+
+  .demo,
+  .right{
+    width:100%;
+  }
+
+  iframe{
+    height:500px;
+  }
+
+  .right{
+    padding:20px;
+  }
+}
+
+@media(max-width:480px){
+  h1{
+    font-size:28px;
+  }
+
+  .sub{
+    font-size:16px;
+  }
+
+  .feature{
+    font-size:16px;
+    padding:12px;
+  }
+
+  .signup-btn{
+    font-size:14px;
+    padding:8px 13px;
+  }
+
+  .cta{
+    font-size:18px;
+    padding:15px;
+  }
+
+  .website-row{
+    flex-direction:column;
+    gap:8px;
+  }
+}
+</style>
 </head>
-
 <body>
+<div class="bonus-popup" id="bonusPopup" role="dialog" aria-modal="true" aria-labelledby="bonusTitle">
+  <div class="bonus-dialog">
+    <button class="bonus-close" id="bonusClose" type="button" aria-label="Close bonus popup">&times;</button>
+    <h2 id="bonusTitle">Bonus Offer</h2>
+    <p>10% Deposit Bonus<br>15% Losing Bonus<br>3% Referral Bonus</p>
+    <a class="bonus-claim" href="https://cbtf.com/clk?src=dvOFld5Vu">Sign Up with CBTF</a>
+  </div>
+</div>
 
-  <header class="header">
-    <h1>🏏 Cricket Live Score</h1>
-    <p class="live">🔴 LIVE</p>
-  </header>
+<div class="container">
+  <div class="demo">
+    <a href="https://cbtf.com/clk?src=dvOFld5Vu" target="_blank" rel="noopener noreferrer" class="floating-signup">SIGN UP WITH CBTF</a>
+    <iframe src="https://cbtf.com/clk?src=dvOFld5Vu" title="CBTF"></iframe>
+  </div>
 
-  <main class="container">
+  <div class="right">
+    <div class="box">
+      <div class="badge">CBTF</div>
+      <h1>Get Your ID Now</h1>
+      <p class="sub">Fast auto website service with easy deposit support. New users can start quickly through WhatsApp.</p>
 
-    <div class="score-card">
-
-      <div class="teams">
-        <div class="team">India</div>
-
-        <div>
-          <div class="score">156/4</div>
-          <div class="overs">18.2 Overs</div>
+      <div class="features">
+        <div class="feature">Minimum Deposit: <span>₹100 Only</span></div>
+        <div class="feature">Welcome Bonus: <span>10%</span></div>
+        <div class="feature">
+          CBTF Signup:
+          <a class="signup-btn" href="https://cbtf.com/clk?src=dvOFld5Vu" target="_blank" rel="noopener noreferrer">Sign Up with CBTF</a>
         </div>
-
-        <div class="team">Australia</div>
+        <div class="feature">Quick Help: <span>Deposit &amp; Withdrawal Support</span></div>
       </div>
 
-      <div class="status">
-        India need 24 runs from 10 balls
+      <div class="website-row">
+        <a class="website" href="https://cbtf.com/clk?src=dvOFld5Vu" target="_blank" rel="noopener noreferrer">CBTF website</a>
+        <a class="whatsapp-small" href="https://wa.me/+919975611687" target="_blank" rel="noopener noreferrer">WhatsApp</a>
       </div>
 
+      <a class="cta" href="https://wa.me/+919975611687?text=Hello%20I%20want%20new%20manual%20ID" target="_blank" rel="noopener noreferrer">WhatsApp Now</a>
+      <p class="trust">Trusted Manual Support<br>Simple Process<br>Fast Response</p>
+      <div class="footer">18+ Only | Play Responsibly | Follow Your Local Laws | T&amp;C Apply</div>
     </div>
+  </div>
+</div>
 
+<script>
+const bonusPopup = document.getElementById('bonusPopup');
+const bonusClose = document.getElementById('bonusClose');
 
-    <!-- Batsmen -->
+function closeBonusPopup(){
+  bonusPopup.hidden = true;
+}
 
-    <div class="section">
-      <h2>🏏 Current Batsmen</h2>
-
-      <table>
-        <tr>
-          <th>Batsman</th>
-          <th>Runs</th>
-          <th>Balls</th>
-          <th>4s</th>
-          <th>6s</th>
-        </tr>
-
-        <tr>
-          <td>Virat Kohli *</td>
-          <td>72</td>
-          <td>45</td>
-          <td>6</td>
-          <td>3</td>
-        </tr>
-
-        <tr>
-          <td>Hardik Pandya</td>
-          <td>31</td>
-          <td>18</td>
-          <td>2</td>
-          <td>2</td>
-        </tr>
-      </table>
-    </div>
-
-
-    <!-- Bowler -->
-
-    <div class="section">
-      <h2>🎯 Current Bowler</h2>
-
-      <table>
-        <tr>
-          <th>Bowler</th>
-          <th>Overs</th>
-          <th>Runs</th>
-          <th>Wickets</th>
-        </tr>
-
-        <tr>
-          <td>Pat Cummins</td>
-          <td>3.2</td>
-          <td>28</td>
-          <td>1</td>
-        </tr>
-      </table>
-    </div>
-
-
-    <!-- Live Updates -->
-
-    <div class="section">
-      <h2>📢 Live Updates</h2>
-
-      <ul class="updates">
-
-        <li>
-          <span class="ball">6</span>
-          Kohli hits a massive six over long-on!
-        </li>
-
-        <li>
-          <span class="ball">4</span>
-          Beautiful cover drive for four.
-        </li>
-
-        <li>
-          <span class="ball">1</span>
-          Pandya takes a quick single.
-        </li>
-
-        <li>
-          <span class="ball">W</span>
-          WICKET! Pandya caught at mid-off.
-        </li>
-
-      </ul>
-    </div>
-
-  </main>
-
-  <footer class="footer">
-    Cricket Live Updates © 2026
-  </footer>
-
+bonusClose.addEventListener('click', closeBonusPopup);
+bonusPopup.addEventListener('click', (event) => {
+  if(event.target === bonusPopup) closeBonusPopup();
+});
+document.addEventListener('keydown', (event) => {
+  if(event.key === 'Escape') closeBonusPopup();
+});
+</script>
 </body>
 </html>
